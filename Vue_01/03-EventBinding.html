@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="divId">
+        <a>{{title}}</a>
+        <button @click="methodA1(),methodA2()">按钮A</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        const App = Vue.createApp({
+            data() {
+                return {
+                    title: "自定义标题"
+                }
+            },
+            methods: {
+                methodA1(){
+                    this.title = "更改后的标题"
+                },
+                methodA2(){
+                    console.log(this.title)
+                }
+            }
+        })
+        App.mount('#divId')
+
+    </script>
+
+</body>
+
+</html>

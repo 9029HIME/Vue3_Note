@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="bindingTest">
+        <div v-bind:title="title">
+            sum: {{ sum }}
+        </div>
+        <button v-on:click="plus10">
+            加10
+        </button>
+        <button v-on:click="plus20">
+            加20
+        </button>
+
+        <hr>
+        <p>输入的内容： {{title}}</p>
+        <input v-model="title" /><br>
+        <p>用户名：<input v-model="userData.username" /></p>
+        <p>密码：<input v-model="userData.password" /></p><br>
+        <button v-on:click="submit">提交</button>
+        <hr>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        const BindingTestDataController = {
+            data() {
+                return {
+                    sum: "0",
+                    title: "this is customer title",
+                    userData: {
+                        username: null,
+                        password: null
+                    }
+                }
+            },
+            mounted() {
+                setInterval(() => {
+                    this.sum++
+                }, 1000);
+            },
+            methods: {
+                plus10() {
+                    this.sum += 10
+                },
+                plus20() {
+                    this.sum += 20
+                },
+                submit() {
+                    alert(this.userData.username + "----" + this.userData.password)
+                }
+            }
+        }
+
+        Vue.createApp(BindingTestDataController).mount('#bindingTest')
+    </script>
+</body>
+
+</html>

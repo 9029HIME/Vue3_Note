@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="divId">
+
+        <div>
+            <!-- 循环App内的todos属性获取item，将item赋值到TodoItem子组件的todo参数里，TodoItem通过todo参数赋值到{{todo}}模板里，渲染最终数据 -->
+            <todo-item v-for="item in todos" v-bind:todo="item"></todo-item>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+
+        // 定义一个组件component
+        const TodoItem = {
+            // 允许从父组件（App）接收todo参数
+            props: ['todo'],
+            template: `<li>这里拿的是父组件传递过来的todo参数: {{todo}}---这里拿的是自己定义的myData参数：{{myData}}</li>`,
+            data(){
+                // 作为一个子组件，和父组件一样，可以自己定义属性自己使用
+                return {
+                    myData: '我自己的data'
+                }
+            }
+        }
+
+        // 定义一个Vue应用（根组件）
+        const App = Vue.createApp({
+            components: {
+
+                // 定义一个名叫TodoItem的组件，引用上面声明的TodoItem组件
+                TodoItem: TodoItem
+
+            },
+            data() {
+                return {
+                    todos: ['A','B','C']
+                }
+            },
+            methods: {
+
+            }
+        })
+
+        // Vue应用绑定Document标签
+        App.mount('#divId')
+
+    </script>
+
+</body>
+
+</html>

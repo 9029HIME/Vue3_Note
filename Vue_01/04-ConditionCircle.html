@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="conditionCircle">
+        <div v-if="show">出现</div>
+        <div v-else>不出现</div>
+        <button v-on:click="reverse">反转</button>
+        <hr>
+        <!-- 可以遍历数组 -->
+        <!-- 在循环的时候，最好指定item的一个唯一属性作为key -->
+        <div v-for="(item,index) in items" :key="item.id">
+            <!-- 因为v-if的优先级比v-for高，所以不要将v-if放在v-for的标签里，否则v-if会认为item是undefined -->
+            <li v-if="item.age != 20">
+                下标：{{index}},姓名：{{item.name}},性别：{{item.age}}
+            </li>
+        </div>
+        <!-- 也可以遍历一个对象的属性名、属性值 -->
+        <div v-for="(value,key) in dataObj">
+            属性值：{{key}} = {{value}}
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        const conditionCircleController = {
+            data() {
+                return {
+                    show: false,
+                    items: [
+                        { "id": 1, name: "A", age: "18" }, { "id": 2, name: "B", age: "19" }, { "id": 3, name: "C", age: "20" }
+                    ],
+                    dataObj: {
+                        key1: "value1",
+                        key2: "value2",
+                        key3: "value3"
+                    }
+                }
+            },
+            methods: {
+                reverse() {
+                    this.show = !this.show
+                }
+            }
+        }
+        Vue.createApp(conditionCircleController).mount('#conditionCircle')
+    </script>
+</body>
+
+</html>

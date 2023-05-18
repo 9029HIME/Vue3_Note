@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="divId">
+        <div>
+            数据1 = {{ data1 }}
+        </div>
+        <div>
+            数据2 = {{ data2 }}
+        </div>
+        <button v-on:click="method1">
+            触发method1
+        </button>
+        <button v-on:click="method2">
+            触发method2
+        </button>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const dataObj = {
+            data() {
+                return {
+                    data1: 1,
+                    data2: 2
+                }
+            },
+            methods: {
+                method1() {
+                    console.log("method1")
+                },
+                method2() {
+                    console.log("method2")
+                }
+            }
+        };
+        var demoApp = Vue.createApp(dataObj);
+        demoApp.mount("#divId");
+    </script>
+</body>
+
+</html>

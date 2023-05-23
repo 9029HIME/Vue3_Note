@@ -25,7 +25,13 @@ const routes = [
                 path: 'son',
                 component: RouterDynamicSon
             }
-        ]
+        ],
+        beforeEnter:[(to,from)=>{
+            console.log(to)
+            console.log(from)
+            // 默认放行
+            return true
+        }]
     }
 ]
 
@@ -33,6 +39,13 @@ const routes = [
 const router = createRouter({
     history: createWebHashHistory(),
     routes
+})
+
+router.beforeEach((to,from)=>{
+    console.log(from)
+    console.log(to)
+    // 默认放行
+    return true
 })
 
 // 将自己作为router模块导出去

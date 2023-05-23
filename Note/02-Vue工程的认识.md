@@ -421,4 +421,162 @@ kjg@kjg-PC:~/projects/front-end/Vue3_Note/hello-world# npm install vue-router@4
    </template>
    ```
    
+
+### 导航守卫
+
+可以理解为SpringMVC里的拦截器，用来控制从A组件路由到B组件过程中的拦截操作，根据操作结果决定路由结果。在项目中往往配合鉴权使用。导航守卫有`全局`、`组件`、`单路由结果`之分。
+
+全局：
+
+```javascript
+// 定义路由器，将路由结果配置到路由器里
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+})
+
+// 定义全局导航守卫
+router.beforeEach((from,to)=>{
+    console.log(from)
+    console.log(to)
+    // 默认放行
+    return true
+})
+```
+
+单路由结果：
+
+```javascript
+const routes = [
+    {
+        path: '/Dynamic/:customerParam',
+        name: 'routerDynamic',
+        component: RouterDynamic,
+        children: [
+            {
+                name: 'son',
+                path: 'son',
+                component: RouterDynamicSon
+            }
+        ],
+        beforeEnter:[(to,from)=>{
+            console.log(to)
+            console.log(from)
+            // 默认放行
+            return true
+        }]
+    }
+]
+
+// 定义路由器，将路由结果配置到路由器里
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+})
+```
+
+### 总结
+
+Vue Router的细节，可以在具体开发过程中翻阅官方文档：https://router.vuejs.org/zh/guide/
+
+## VueX
+
+可以理解为Vue里的全局变量管理组件，有点类似IOC容器，但不提供DI的功能。它的核心思想是在VueX实例里声明变量、操作方法，只要根组件使用了这个VueX实例，那么根Model以及其子组件都能使用VueX声明的变量和方法，**实现变量的全局管理**。
+
+安装：
+
+```bash
+kjg@kjg-PC:~/projects/front-end/Vue3_Note/hello-world# npm install vuex@next --save
+```
+
+使用：
+
+1. 创建一个store（VueX存储变量、操作变量的具体单位）
+
+   ```javascript
+   // 创建store实例
+   const store = createStore({
+       // 可以理解为组件的data()
+       state() {
+           return {
+               totalNum: 0
+           }
+       },
+       // 可以理解为组件的methods
+       mutations: {
+           increment(state) {
+               state.totalNum++
+           }
+       },
+       // 可以理解为组件的属性计算
+       getters: {
+           getterA(state){
+               return state.totalNum * 10
+           }
+       }
+   })
    
+   let app = createApp(App).use(router).use(store)
+   ```
+
+2. 在其他组件使用store
+
+   ```vue
+   <template>
+     <p>
+       <span>来自store的totalNum: {{ $store.state.totalNum }}</span><br>
+         <span>来自store的getterA: {{ useGetterA }}</span><br> 
+       <button @click="()=>{this.$store.commit('increment')}">加1</button>
+     </p>
+   </template>
+   
+   <script>
+   export default {
+     name: 'App',
+     components: {
+     },
+     computed: {
+       useGetterA(){
+         return this.$store.getters.getterA
+       }
+     }
+   }
+   </script>
+   ```
+
+### 总结
+
+VueX还有module的概念，具体在开发过程中查看文档：https://vuex.vuejs.org/zh/guide/modules.html
+
+## UI组件
+
+以element-plus搭配Vue3工程举例。
+
+安装：
+
+```bash
+kjg@kjg-PC:~/projects/front-end/Vue3_Note/hello-world# npm install element-plus
+```
+
+在根组件中使用ElementPlus：
+
+```javascript
+import ElementPlus from 'element-plus'
+
+let app = createApp(App).use(router).use(store).use(ElementPlus)
+app.mount('#app')
+```
+
+在Vue文件中使用element-plus：
+
+```vue
+<template>
+  <p>
+    <el-button>Default</el-button>
+  </p>
+</template>
+```
+
+最终效果：
+
+![07](02-Vue工程的认识.assets/image-20230523133845681.png)
